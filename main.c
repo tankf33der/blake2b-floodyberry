@@ -14,33 +14,28 @@ void print_vector(const uint8_t *buf, size_t size)
     printf(":\n");
 }
 
-
 int main(void) {
-	uint8_t d[65], out1[65], out2[65];
-	int result = 0;
+	uint8_t d[64], out1[64], out2[64];
+	blake2b_state ctx;
 
 	blake2b_startup();
-	for(size_t i = 0; i < 65; i++) d[i] = i;
 	
-	// for(size_t k = 1; k <= 6; k++)
-		// for(size_t m = 1; m <= 6; m++) {
-			// blake2b_keyed(out1, d, m, d, k);
-			// crypto_blake2b_general(out2, 64, d, k, d, m);
-			// result |= memcmp(out1, out2, 64);
-			// printf("%d\n", result);
-		// }
-	// blake2b_keyed(out1, d, 10, d, 10);
+	for(size_t i = 0; i < 64; i++) d[i] = i;
+	
 	blake2b(out1, d, 10);
 	crypto_blake2b(out2, d, 10);
 	print_vector(out1, 64);
 	print_vector(out2, 64);
+
+	blake2b_keyed_init(&ctx, d, 10);
+	blake2b_update(&ctx, d, 10);
+	blake2b_final(&ctx, out1);
+    print_vector(out1, 64);
 
 	blake2b_keyed(out1, d, 10, d, 10);
 	crypto_blake2b_general(out2, 64, d, 10, d, 10);
 	print_vector(out1, 64);
 	print_vector(out2, 64);
 
-
-	
-	return result;
+	return 0;	
 }
