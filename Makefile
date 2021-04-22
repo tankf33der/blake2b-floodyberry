@@ -1,5 +1,5 @@
 all:
-	gcc -O3 *.c -lblake2b
+	gcc -O3 *.c -lblake2b  && ./a.out
 clean:
 	rm -rf *.o *.out
 	
