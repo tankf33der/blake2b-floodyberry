@@ -29,9 +29,18 @@ int main(void) {
 			// result |= memcmp(out1, out2, 64);
 			// printf("%d\n", result);
 		// }
+	// blake2b_keyed(out1, d, 10, d, 10);
+	blake2b(out1, d, 10);
+	crypto_blake2b(out2, d, 10);
+	print_vector(out1, 64);
+	print_vector(out2, 64);
+
 	blake2b_keyed(out1, d, 10, d, 10);
 	crypto_blake2b_general(out2, 64, d, 10, d, 10);
 	print_vector(out1, 64);
 	print_vector(out2, 64);
+
+
+	
 	return result;
 }
